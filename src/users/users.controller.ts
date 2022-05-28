@@ -1,7 +1,7 @@
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import {Post, Body , Controller, Get, Param, Query, Delete, Patch } from '@nestjs/common';
+import { Post, Body, Controller, Get, Param, Query, Delete, Patch, NotFoundException } from '@nestjs/common';
 import { bindCallback } from 'rxjs';
 
 @Controller('auth')
@@ -20,7 +20,12 @@ export class UsersController {
 
     @Get('/:id')
     findUser(@Param('id') id: string){
-        return this.usersService.findOne(parseInt(id));
+        const user= this.usersService.findOne(parseInt(id));
+        if(!user ){
+            throw new NotFoundException('user noy found');
+        }
+
+        return user;
     }
 
     @Get()

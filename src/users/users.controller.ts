@@ -15,7 +15,7 @@ import { Post,
     ClassSerializerInterceptor,
     } from '@nestjs/common';
 
-
+    import { UserDto } from 'src/users/dtos/user.dto';
 @Controller('auth')
 export class UsersController {
 
@@ -31,7 +31,7 @@ export class UsersController {
     }
 
     @Get('/:id')
-    @UseInterceptors(SerializeInterceptor)
+    @UseInterceptors(new SerializeInterceptor(UserDto))
     findUser(@Param('id') id: string){
         console.log('2- handling the request');
         const user= this.usersService.findOne(parseInt(id));

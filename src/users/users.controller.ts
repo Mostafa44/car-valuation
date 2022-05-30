@@ -1,8 +1,19 @@
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { Post, Body, Controller, Get, Param, Query, Delete, Patch, NotFoundException } from '@nestjs/common';
-import { bindCallback } from 'rxjs';
+import { Post, 
+    Body, 
+    Controller, 
+    Get, 
+    Param,
+    Query, 
+    Delete,
+    Patch,
+    NotFoundException,
+    UseInterceptors, 
+    ClassSerializerInterceptor,
+    } from '@nestjs/common';
+
 
 @Controller('auth')
 export class UsersController {
@@ -19,6 +30,7 @@ export class UsersController {
     }
 
     @Get('/:id')
+    @UseInterceptors(ClassSerializerInterceptor)
     findUser(@Param('id') id: string){
         const user= this.usersService.findOne(parseInt(id));
         if(!user ){

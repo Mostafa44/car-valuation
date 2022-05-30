@@ -17,6 +17,7 @@ import { Post,
 
     import { UserDto } from 'src/users/dtos/user.dto';
 @Controller('auth')
+@Serialize(UserDto)
 export class UsersController {
 
     private usersService: UsersService;
@@ -31,7 +32,7 @@ export class UsersController {
     }
 
     @Get('/:id')
-    @Serialize(UserDto)
+
     findUser(@Param('id') id: string){
         console.log('2- handling the request');
         const user= this.usersService.findOne(parseInt(id));

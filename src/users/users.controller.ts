@@ -13,6 +13,7 @@ import { Post,
     NotFoundException,
     UseInterceptors, 
     ClassSerializerInterceptor,
+    Session,
     } from '@nestjs/common';
 
 import { UserDto } from 'src/users/dtos/user.dto';
@@ -29,7 +30,18 @@ export class UsersController {
         this.usersService= usersService;
         this.authService= authService;
     }
+    //Examples of setting and getting session variables
 
+    @Get("/colors/:color")
+    setColor(@Param('color') color: string, @Session() session:any){
+        session.color= color;
+    }
+
+    @Get("/colors")
+    getColor(@Session() session:any ){
+        return session.color;
+    }
+//=====================
     @Post("/signup")
     createUser(@Body() body:CreateUserDto){
        return this.authService.signup(body.email, body.password);

@@ -1,7 +1,3 @@
-import { Serialize } from './../interceptors/serializer.interceptior';
-import { UpdateUserDto } from './dtos/update-user.dto';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dtos/create-user.dto';
 import { Post, 
     Body, 
     Controller, 
@@ -15,8 +11,11 @@ import { Post,
     ClassSerializerInterceptor,
     Session,
     } from '@nestjs/common';
-
-import { UserDto } from 'src/users/dtos/user.dto';
+import { Serialize } from './../interceptors/serializer.interceptior';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -42,6 +41,12 @@ export class UsersController {
         return session.color;
     }
 //=====================
+    @Get("whoami")
+    whoAmI(@Session() session:any){
+        return this.usersService.findOne(session.userId);
+
+    }
+
     @Post("/signup")
     createUser(@Body() body:CreateUserDto){
        return this.authService.signup(body.email, body.password);

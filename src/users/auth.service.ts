@@ -12,7 +12,8 @@ export class AuthService{
     async signup(email:string, password:string){
 
     const users= await this.userService.find(email);
-    if(users){
+    console.log(users);
+    if(users && users.length >0 ){
         throw new BadRequestException('email in use!');
     }
     const salt= await randomBytes(8).toString('hex');

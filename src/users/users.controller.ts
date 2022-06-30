@@ -56,6 +56,12 @@ export class UsersController {
     signin(@Body() body:CreateUserDto){
        return  this.authService.signin(body.email, body.password);
     }
+
+    @Post("/signout")
+    signout(@Session() session:any){
+        session.userId= null;
+    }
+
     @Get('/:id')
 
     findUser(@Param('id') id: string){

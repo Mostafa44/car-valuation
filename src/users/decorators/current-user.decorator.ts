@@ -8,6 +8,8 @@ import{
 //but effectively it is the incoming request
 export const CurrentUser= createParamDecorator(
     (data:never, context: ExecutionContext)=>{
+        const request= context.switchToHttp().getRequest();
+        console.log(request.session.userId);
         return 'hi there';
     }
 )
